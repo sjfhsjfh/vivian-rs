@@ -8,6 +8,36 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#[cfg(all(
+    feature = "default-tls",
+    any(
+        feature = "rustls-tls",
+        feature = "rustls-tls-native-roots",
+        feature = "rustls-tls-webpki-roots",
+    ),
+))]
+compile_error!(
+    "TLS backend features are mutually exclusive. Use default `default-tls`, or disable default features and enable one of: `rustls-tls`, `rustls-tls-native-roots`, `rustls-tls-webpki-roots`."
+);
+
+#[cfg(all(
+    feature = "rustls-tls-native-roots",
+    any(feature = "rustls-tls", feature = "rustls-tls-webpki-roots"),
+))]
+compile_error!(
+    "Enable only one rustls roots option: use `rustls-tls`/`rustls-tls-webpki-roots`, or `rustls-tls-native-roots`."
+);
+
+#[cfg(not(any(
+    feature = "default-tls",
+    feature = "rustls-tls",
+    feature = "rustls-tls-native-roots",
+    feature = "rustls-tls-webpki-roots",
+)))]
+compile_error!(
+    "A TLS backend feature must be enabled. Enable default `default-tls` (default), or disable default features and enable one rustls feature."
+);
+
 pub mod api;
 pub mod client;
 pub mod error;

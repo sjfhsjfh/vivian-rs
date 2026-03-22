@@ -39,6 +39,16 @@ log = "0.4"
 # 其他您项目可能需要的依赖
 ```
 
+#### TLS backend (optional)
+
+By default, this crate uses `default-tls` (OpenSSL via `native-tls`). To use `rustls`:
+
+```toml
+milky-rust-sdk = { version = "1", default-features = false, features = ["rustls-tls-native-roots"] }
+```
+
+TLS feature names follow `reqwest`: `default-tls` (default), `rustls-tls`, `rustls-tls-native-roots`, `rustls-tls-webpki-roots`.
+
 ### 2. 初始化日志 (可选但推荐)
 
 ```rust

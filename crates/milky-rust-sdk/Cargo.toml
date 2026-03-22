@@ -18,6 +18,26 @@ repository.workspace = true
 [badges]
 maintenance = { status = "actively-developed" }
 
+[features]
+default = ["default-tls"]
+
+default-tls = [
+  "reqwest/default-tls",
+  "tokio-tungstenite/native-tls",
+]
+
+rustls-tls = ["rustls-tls-webpki-roots"]
+
+rustls-tls-webpki-roots = [
+  "reqwest/rustls-tls-webpki-roots",
+  "tokio-tungstenite/rustls-tls-webpki-roots",
+]
+
+rustls-tls-native-roots = [
+  "reqwest/rustls-tls-native-roots",
+  "tokio-tungstenite/rustls-tls-native-roots",
+]
+
 [dependencies]
 milky-types = { path = "../milky-types", version = "1" }
 serde = { workspace = true }
@@ -27,11 +47,11 @@ url = "2"
 log = "0.4"
 thiserror = "2"
 uuid = { version = "1.16.0", features = ["v4"] }
-reqwest = { version = "0.12.15", features = ["json"] }
+reqwest = { version = "0.12.15", default-features = false, features = ["charset", "http2", "json", "system-proxy"] }
 pretty_env_logger = "0.5.0"
 env_logger = "0.11.8"
 chrono = "0.4.41"
 ansi_term = "0.12.1"
 axum = "0.8.4"
 tokio = { workspace = true }
-tokio-tungstenite = { version = "0.28", features = ["native-tls"] }
+tokio-tungstenite = { version = "0.28" }
