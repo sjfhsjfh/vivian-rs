@@ -25,6 +25,7 @@ use tokio_tungstenite::{
 };
 use url::Url;
 
+#[derive(Clone)]
 /// 与后端服务交互的主要结构体
 pub struct MilkyClient {
     /// 用于发送HTTP API请求的 `reqwest` 客户端实例
